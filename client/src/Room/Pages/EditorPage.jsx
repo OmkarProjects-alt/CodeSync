@@ -721,89 +721,10 @@ useEffect(() => {
         connect: true,
         maxBackoffTime: 5000,
       });
-      // provider = new WebsocketProvider(
-      //   'wss://codesync-yjs-server-con.onrender.com', 
-      //   docName, 
-      //   ydoc, 
-      //   {
-      //     connect: true,
-      //     maxBackoffTime: 5000,
-      //   }
-      // );
-      // Replace your WebSocketProvider initialization with:
-
-      
-      //  try{
-      //    const provider = new WebsocketProvider(
-      //     // 'wss://codesync-yjs-server-con.onrender.com',
-      //     'ws://localhost:1234',
-      //     docName,
-      //     ydoc,
-      //     {
-      //       connect: true,
-      //       maxBackoffTime: 5000,
-      //       disableBc: true, // Disable broadcast channel for more reliable WS
-      //       awareness: new awarenessProtocol.Awareness(ydoc),
-      //       websocketPolyfill: require('isomorphic-ws')
-      //     }
-      //   );
-      //  }catch(err){
-      //     console.error("Yjs init error:", e.message);
-      //     setErrorMessage(prev => prev.some(e => e.message === 'Failed to initialize collaborative editor.')
-      //       ? prev
-      //       : [...prev , {id: Date.now() , message: "Failed to initialize collaborative editor."}]
-      //     );
-      //  }
-
-        // Add robust error handling
-        // provider.on('status', event => {
-        //   console.log('Connection status:', event.status);
-        //   if (event.status === 'disconnected') {
-        //     setTimeout(() => {
-        //       if (provider.shouldConnect) provider.connect();
-        //     }, 1000);
-        //   }
-        // });
-
-        // provider.on('sync', (isSynced) => {
-        //   console.log('Sync status:', isSynced);
-        // });
-
-        // provider.on('error', (error) => {
-        //   console.error('Yjs provider error:', error);
-        //   setTimeout(() => {
-        //     if (provider.shouldConnect) provider.connect();
-        //   }, 2000);
-        // });
-      yProviders.current[fileName] = provider;
+      s.current[fileName] = provider;
 
       const yText = ydoc.getText('monaco');
-      // if (model && yText && model.getValue() === "" && yText.toString().length > 0) {
-      //   model.setValue(yText.toString());
-      // }
 
-      // provider.once('synced', () => {
-      //   if (yText.length === 0 && fileCodes[fileName]) {
-      //     yText.insert(0, fileCodes[fileName]);
-      //   }
-      //   bindingRef.current = new MonacoBinding(yText, model, new Set([editor]), provider.awareness);
-      // });
-
-      // provider.once('synced', () => {
-      //   setTimeout(() => {
-      //     const boiler = fileCodes[fileName] ?? "// Start coding...";
-      //     if (yText.length === 0 && boiler.trim() !== "") {
-      //       yText.insert(0, boiler);
-      //     }
-
-      //     bindingRef.current = new MonacoBinding(
-      //       yText,
-      //       model,
-      //       new Set([editor]),
-      //       provider.awareness
-      //     );
-      //   }, 100);
-      // });
       provider.once('synced', () => {
       setTimeout(() => {
         const boiler = fileCodes[fileName] ?? "// Start coding...";
